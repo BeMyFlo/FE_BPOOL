@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-function setCookie(cname, cvalue, exdays) {
-  const d = new Date();
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-  let expires = "expires=" + d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
+import axios from 'axios';
 
 function Login() {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
-
+  const setAuthToken = (token) => {
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+      delete axios.defaults.headers.common['Authorization'];
+    }
+  };
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -30,18 +30,10 @@ function Login() {
         },
         body: JSON.stringify(formData),
       });
-
       if (response.ok) {
         const data = await response.json();
-
-        // Lấy token từ response
         const token = data.token;
-
-        localStorage.setItem("token", token);
-        // Lưu token vào cookie
-        setCookie("token", token, 1);
-
-        // Chuyển hướng đến trang sau khi đăng nhập thành công
+        setAuthToken(token);
         navigate("/");
       } else {
         console.error("Đăng nhập thất bại");

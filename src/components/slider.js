@@ -1,9 +1,10 @@
 import React from 'react';
+import Image from '.././assets/img/slider.png';
 
 function Slider() {
     return (
         <div className='flex justify-center mt-3'>
-            <img className='h-full w-4/6 rounded-xl ' src='/slider.png' alt='lỗi' />
+            <img className='h-full w-full rounded-xl ' src={Image} alt='lỗi' />
         </div>
     );
 }

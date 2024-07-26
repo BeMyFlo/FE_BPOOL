@@ -4,10 +4,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Import Brows
 
 import './App.css';
 import Home from './pages/Home';
-import Product from './pages/Product'; // Import the Product component
+import Detail from './pages/Detail'; // Import the Product component
 import Navbar from './components/navbar';
 import Login from './pages/login';
 import Register from './pages/register';
+import Footer from './components/footer';
 
 function App() {
   return (
@@ -16,12 +17,15 @@ function App() {
         {/* Component */}
         <Navbar></Navbar>
         {/* Route */}
-        <Routes>  
-            <Route path='/' element={<Home />} /> {/* Define your Route with the correct path and element */}
-            <Route path='/product' element={<Product />} /> {/* Define your Route with the correct path and element */}
-            <Route path='/login' element={<Login />} /> {/* Define your Route with the correct path and element */}
-            <Route path='/register' element={<Register />} /> {/* Define your Route with the correct path and element */}
-        </Routes>
+        <div className='my-20'>
+          <Routes>  
+              <Route path='/' element={<Home />} /> {/* Define your Route with the correct path and element */}
+              <Route path='/detail' element={<Detail />} /> {/* Define your Route with the correct path and element */}
+              <Route path='/login' element={<Login />} /> {/* Define your Route with the correct path and element */}
+              <Route path='/register' element={<Register />} /> {/* Define your Route with the correct path and element */}
+          </Routes>
+        </div>
+        <Footer></Footer>
       </div>
     </BrowserRouter>
   );
