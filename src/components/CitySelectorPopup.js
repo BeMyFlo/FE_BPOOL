@@ -53,7 +53,7 @@ function CitySelectorPopup({ onClose, onSelect }) {
           ))}
         </ul>
         <button
-          className="mt-4 bg-red-500 text-white py-2 px-4 rounded"
+          className="mt-4 bg-black text-white py-2 px-4 rounded shadow-md"
           onClick={onClose}
         >
           Đóng

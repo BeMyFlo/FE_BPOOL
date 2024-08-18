@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import CitySelectorPopup from './CitySelectorPopup'; // Import component chọn thành phố
-import DateSelectorPopup from './DateSelectorPopup'; // Import component chọn ngày
+import CitySelectorPopup from './CitySelectorPopup';
+import DateSelectorPopup from './DateSelectorPopup';
 import { format } from 'date-fns';
 
 function Filter() {
+  const CITY_HO_CHI_MINH = 'Hồ Chí Minh';
+
   const [showCityPopup, setShowCityPopup] = useState(false);
   const [showDatePopup, setShowDatePopup] = useState(false);
-  const [selectedCity, setSelectedCity] = useState('Hồ Chí Minh');
+  const [selectedCity, setSelectedCity] = useState(CITY_HO_CHI_MINH);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   return (
@@ -30,7 +32,7 @@ function Filter() {
           </div>
         </div>
         <div className="ml-4">
-          <button className="group bg-yellow-600 rounded-full h-10 w-10 flex items-center justify-center hover:bg-yellow-700">
+          <button className="group bg-gradient-to-r from-black to-gray-800 rounded-full h-10 w-10 flex items-center justify-center hover:bg-yellow-700 shadow-md">
             <FaSearch className="text-white group-hover:text-white" />
           </button>
         </div>

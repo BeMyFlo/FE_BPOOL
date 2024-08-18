@@ -5,7 +5,17 @@ module.exports = {
     "tailwind.config.{js,cjs,mjs,ts}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+      },
+      colors: {
+        primaryGray: '#F5F5F5',
+        grayText: '#565656',
+        lightYellow: '#FAEADD',
+        brown: '#B2967D',
+      },
+    },
   },
   plugins: [],
 }
