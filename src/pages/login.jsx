@@ -2,11 +2,14 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../redux/userSlice';
+import userApi from '../api/user/userApi';
 
 function Login() {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
   const setAuthToken = (token) => {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -25,19 +28,13 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8000/api/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        const token = data.token;
+      const response = await userApi.signin({ username: formData.username, password: formData.password });
+      if (response.token) {
+        const token = response.token;
+        const user = response.user;
         setAuthToken(token);
-        setAuth(true);
-        navigate("/?type=1");
+        dispatch(setUser({ user, token }));
+        navigate("/");
       } else {
         console.error("Đăng nhập thất bại");
       }
