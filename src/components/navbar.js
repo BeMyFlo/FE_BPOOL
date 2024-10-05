@@ -1,12 +1,30 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from '.././assets/img/logo-2.jpg';
+import Logo from '../assets/img/logo-2.jpg';
 import { MdOutlineMenu } from "react-icons/md";
 import { AuthContext } from '../context/AuthContext';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../redux/userSlice'; // Import logout action từ Redux
+
 function Navbar() {
   const location = useLocation();
+  const [selectedMenu, setSelectedMenu] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { isAuth, setAuth } = useContext(AuthContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  const handleMenuClick = (name) => {
+    if (selectedMenu === name) {
+      setSelectedMenu(null);
+    }
+  };
+
+  // Lấy token và trạng thái từ Redux store
+  const { isAuthenticated } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   return (
     <div className="bg-white shadow-md fixed w-full top-0 z-10">
@@ -17,17 +35,40 @@ function Navbar() {
               <img className="h-7 md:h-[5rem]" src={Logo} alt="Mô tả hình ảnh" />
             </a>
           </div>
-          <div className="hidden md:flex h-full items-center gap-12">
-            <Link to="/bar/?type=1" className="hover:text-primaryColor font-semibold hover:-translate-y-1 hover:scale-110 font-sans">
-              <div className={`${location.search === '?type=1' ? 'underline font-bold hover:text-gray-800' : 'font-bold hover:text-gray-800'}`}>BIDA LỖ</div>
+          <div className="hidden md:flex h-full items-center gap-16">
+            <Link to="/" className="hover:text-primaryColor font-semibold font-custom hover:-translate-y-1 hover:scale-110">
+              <div className={`${location.search === '?type=1' ? 'underline font-bold hover:text-gray-800' : 'font-bold hover:text-gray-800'}`} onClick={(e) => handleMenuClick('TRANG CHỦ')}>
+                TRANG CHỦ
+              </div>
             </Link>
-            <Link to="/bar/?type=2" className="hover:text-primaryColor font-semibold hover:-translate-y-1 hover:scale-110 font-sans">
-              <div className={`${location.search === '?type=2' ? 'underline font-bold hover:text-gray-800' : 'font-bold hover:text-gray-800'}`}>BIDA 3 BĂNG</div>
-            </Link>
+            {/* Dropdown for ĐẶT BÀN */}
+            <div className="relative">
+              {/* Button to toggle menu with arrow */}
+              <div onClick={toggleMenu} className="cursor-pointer font-bold hover:text-gray-800 flex items-center px-4 py-2 rounded-md">
+                ĐẶT BÀN
+                <FontAwesomeIcon icon={faChevronDown} className={`ml-2 transition-transform duration-300 ${isMenuOpen ? 'rotate-180' : ''}`} />
+              </div>
+
+              {/* Dropdown Menu */}
+              {isMenuOpen && (
+                <div className="absolute left-0 mt-1 bg-white shadow-lg rounded-lg z-50 w-40 border border-gray-200">
+                  <Link to="/bar/?type=1" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    <div className={`${location.search === '?type=1' ? 'underline font-bold' : 'font-bold'}`}>
+                      BIDA LỖ
+                    </div>
+                  </Link>
+                  <Link to="/bar/?type=2" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    <div className={`${location.search === '?type=2' ? 'underline font-bold' : 'font-bold'}`}>
+                      BIDA 3 BĂNG
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
           {/* Check if the user is logged in */}
           <div className="hidden md:flex items-center gap-5">
-            {isAuth ? (
+            {isAuthenticated ? (
               <div className="relative">
                 <img
                   src="https://www.w3schools.com/howto/img_avatar.png"
@@ -40,7 +81,7 @@ function Navbar() {
                     <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</Link>
                     <Link to="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
                     <button onClick={() => {
-                      setAuth(false);
+                      dispatch(logout());
                       localStorage.removeItem('authToken');
                     }} className="block w-full text-center px-4 py-2 text-sm text-red-600 font-bold bg-red-300 hover:bg-gray-100">Logout</button>
                   </div>
