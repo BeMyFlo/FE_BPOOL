@@ -1,30 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from './../service/axiosConfig.js';
+import { useFetchData } from '../hooks/useEffectData';
 
 function CitySelectorPopup({ onClose, onSelect }) {
-  const [cities, setCities] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchCities = async () => {
-      try {
-        const response = await axios.get('/city');
-        console.log(response);
-        if (response.data && Array.isArray(response.data.data)) {
-          setCities(response.data.data);
-        } else {
-          throw new Error('Dữ liệu không hợp lệ');
-        }
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCities();
-  }, []);
+  const { data, loading, error, setData } = useFetchData(`/city`);
 
   if (loading) {
     return <div>Đang tải...</div>;
@@ -39,12 +18,12 @@ function CitySelectorPopup({ onClose, onSelect }) {
       <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
         <h2 className="text-lg font-bold mb-4">Chọn Khu Vực</h2>
         <ul>
-          {cities.map((city) => (
+          {data.map((city) => (
             <li
               key={city.id}
               className="cursor-pointer py-2 px-4 hover:bg-gray-200"
               onClick={() => {
-                onSelect(city.name);
+                onSelect(city);
                 onClose();
               }}
             >

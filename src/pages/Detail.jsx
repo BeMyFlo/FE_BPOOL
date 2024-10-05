@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import Slider from "../components/slider";
 import { useParams, useNavigate } from 'react-router-dom'; // Thay đổi useHistory thành useNavigate
+import DateSelectorPopup from '../components/DateSelectorPopup';
+import HourSelectorPopup from '../components/HourSelectorPopup';
+import { format } from 'date-fns';
 import axios from './../service/axiosConfig.js';
 
 function Detail() {
-  const { id } = useParams(); // ID của bar
-  const navigate = useNavigate(); // Thay đổi useHistory thành useNavigate
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
   const [colors, setColors] = useState([]);
   const [selected, setSelected] = useState('booking');
-  const [selectedTables, setSelectedTables] = useState([]); // State để lưu bàn đang chọn
+  const [showDatePopup, setShowDatePopup] = useState(false);
+  const [showHourPopup, setShowHourPopup] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedHour, setSelectedHour] = useState(null);
+  const [selectedTables, setSelectedTables] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/bar/${id}`);
-        
-        // Đảm bảo cập nhật state với đúng cấu trúc dữ liệu
+
         if (response.data && response.data.data) {
           setData(response.data.data);
         } else {
@@ -62,7 +68,7 @@ function Detail() {
     if (selectedTables.length > 0) {
       const imageUrl = data.imageUrl;
       console.log(data.imageUrl);
-      navigate('/payment', { state: { barId: id, tables: selectedTables, imageUrl: imageUrl } });
+      navigate('/payment', { state: { barId: id, tables: selectedTables, imageUrl: imageUrl, date: selectedDate, hour: selectedHour } });
     } else {
       alert('Vui lòng chọn ít nhất một bàn trước khi đặt.');
     }
@@ -79,7 +85,7 @@ function Detail() {
   return (
     <div className="mt-20">
       {/* Hình */}
-      <Slider img={data.imageUrl} /> 
+      <Slider img={data.imageUrl} />
       {/* Tên quán */}
       <div>
         <h1 className="text-3xl md:text-6xl text-center font-bold text-black md:mt-10">{data.name}</h1>
@@ -110,17 +116,17 @@ function Detail() {
       <div className={`flex justify-center mt-6 ${selected === 'describe' ? 'hidden' : ''}`}>
         <div className="h-[60px] w-[300px] md:h-[95px] md:w-[560px] bg-lightYellow rounded-[40px] flex justify-center items-center shadow-xl">
           <div className="p-2 bg-lightYellow h-[60px] w-[300px] md:h-[90px] md:w-[530px] flex gap-1 rounded-[40px]">
-            <div className="bg-lightYellow h-full w-1/2 rounded-xl flex items-center">
-              <div className="flex flex-col items-start p-2">
-                <p className="">Ngày</p>
-                <p className="">29/7/2024</p>
+            <div className="bg-lightYellow h-full w-1/2 rounded-xl flex items-center" onClick={() => setShowDatePopup(true)}>
+              <div className="flex flex-col items-start p-2 cursor-pointer">
+                <p className="font-bold">Ngày</p>
+                <p className="">{format(selectedDate, 'dd/MM/yyyy')}</p>
               </div>
             </div>
             <div className="h-full w-[1px] bg-gray-400"></div>
-            <div className="bg-lightYellow h-full w-1/2 rounded-xl flex items-center">
+            <div className="bg-lightYellow h-full w-1/2 rounded-xl flex items-center" onClick={() => setShowHourPopup(true)}>
               <div className="flex flex-col items-start p-2">
-                <p className="">Giờ</p>
-                <p className="">6:00 AM</p>
+                <p className="font-bold">Giờ</p>
+                <p className="">{selectedHour ? selectedHour.toLocaleTimeString() : 'Chưa chọn giờ'}</p>
               </div>
             </div>
           </div>
@@ -160,13 +166,27 @@ function Detail() {
         </div>
       </div>
       <div className={`mt-10 flex justify-center ${selected === 'describe' ? 'hidden' : ''}`}>
-        <div 
+        <div
           className="h-[40px] w-[150px] text-lg rounded-[10px] md:h-[78px] md:w-[298px] shadow-xl bg-gradient-to-r from-black to-gray-700 flex items-center justify-center md:rounded-[20px] md:text-4xl cursor-pointer text-white"
           onClick={handleBooking} // Gọi hàm khi bấm nút
         >
           <p>Đặt bàn</p>
         </div>
       </div>
+      {showDatePopup && (
+        <DateSelectorPopup
+          selectedDate={selectedDate}
+          onClose={() => setShowDatePopup(false)}
+          onSelect={(date) => setSelectedDate(date)}
+        />
+      )}
+      {showHourPopup && (
+        <HourSelectorPopup
+          selectedHour={selectedHour}
+          onClose={() => setShowHourPopup(false)}
+          onSelect={(hour) => setSelectedHour(hour)}
+        />
+      )}
     </div>
   );
 }

@@ -8,6 +8,8 @@ module.exports = {
     extend: {
       fontFamily: {
         inter: ['Inter', 'sans-serif'],
+        sans: ['Quicksand', 'sans-serif'],
+        vollkorn: ['Vollkorn', 'serif'],
       },
       colors: {
         primaryGray: '#F5F5F5',

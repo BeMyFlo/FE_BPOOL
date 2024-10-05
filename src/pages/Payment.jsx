@@ -7,15 +7,21 @@ import axios from './../service/axiosConfig.js';
 function Payment() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { barId, tables, imageUrl } = location.state || { barId: null, tables: [], imageUrl: null };
+    const { barId, tables, imageUrl, date, hour } = location.state || { barId: null, tables: [], imageUrl: null, date: null, hour: null };
+
 
     const handlePayment = () => {
         const paymentData = {
-            barId,
-            tables,
+          barId,
+          tableId: tables,
+          date: date,
+          hour: hour,
+          discount: "6639fa4de4dcb4fdce39a0c7",
+          price: 100000,
+          payment_method: 1,
         };
-
-        axios.post('/create-booking', paymentData)
+    
+        axios.post('booking/create', paymentData)
             .then(response => {
             console.log('Booking successful:', response.data);
             navigate('/booking-success');

@@ -7,6 +7,7 @@ import Detail from '../pages/Detail';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Payment from '../pages/Payment';
+import Home from '../pages/Home';
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
       <Route path='/register' element={<Register />} /> {/* Define your Route with the correct path and element */}
       <Route path='/payment' element={<Payment />} /> {/* Define your Route with the correct path and element */}
       <Route path="/detail/:id" element={<Detail />} />
+      <Route path="/" element={<Home />} />
     </Routes>
   );
 };
