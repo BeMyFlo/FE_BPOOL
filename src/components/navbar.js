@@ -13,15 +13,15 @@ function Navbar() {
       <div className="max-w-7xl mx-auto h-20">
         <div className="p-4 flex justify-between items-center h-full">
           <div>
-            <a href="/?type=1">
+            <a href="/">
               <img className="h-7 md:h-[5rem]" src={Logo} alt="Mô tả hình ảnh" />
             </a>
           </div>
           <div className="hidden md:flex h-full items-center gap-12">
-            <Link to="/?type=1" className="hover:text-primaryColor font-semibold font-custom hover:-translate-y-1 hover:scale-110">
+            <Link to="/bar/?type=1" className="hover:text-primaryColor font-semibold hover:-translate-y-1 hover:scale-110 font-sans">
               <div className={`${location.search === '?type=1' ? 'underline font-bold hover:text-gray-800' : 'font-bold hover:text-gray-800'}`}>BIDA LỖ</div>
             </Link>
-            <Link to="/?type=2" className="hover:text-primaryColor font-semibold font-custom hover:-translate-y-1 hover:scale-110">
+            <Link to="/bar/?type=2" className="hover:text-primaryColor font-semibold hover:-translate-y-1 hover:scale-110 font-sans">
               <div className={`${location.search === '?type=2' ? 'underline font-bold hover:text-gray-800' : 'font-bold hover:text-gray-800'}`}>BIDA 3 BĂNG</div>
             </Link>
           </div>
@@ -36,13 +36,13 @@ function Navbar() {
                   onClick={() => setMenuOpen(!menuOpen)}
                 />
                 {menuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg py-1">
+                  <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
                     <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</Link>
                     <Link to="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
                     <button onClick={() => {
                       setAuth(false);
                       localStorage.removeItem('authToken');
-                    }} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                    }} className="block w-full text-center px-4 py-2 text-sm text-red-600 font-bold bg-red-300 hover:bg-gray-100">Logout</button>
                   </div>
                 )}
               </div>

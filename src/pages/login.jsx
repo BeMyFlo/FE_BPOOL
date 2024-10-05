@@ -10,6 +10,7 @@ function Login() {
   const setAuthToken = (token) => {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      localStorage.setItem('authToken', token);
     } else {
       delete axios.defaults.headers.common['Authorization'];
     }
