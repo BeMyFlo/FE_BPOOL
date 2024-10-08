@@ -6,7 +6,8 @@ import { AuthContext } from '../context/AuthContext';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../redux/userSlice'; // Import logout action từ Redux
+import { logout } from '../redux/userSlice';
+import AvatarDropdown from './AvatarDropdown';
 
 function Navbar() {
   const location = useLocation();
@@ -69,24 +70,7 @@ function Navbar() {
           {/* Check if the user is logged in */}
           <div className="hidden md:flex items-center gap-5">
             {isAuthenticated ? (
-              <div className="relative">
-                <img
-                  src="https://www.w3schools.com/howto/img_avatar.png"
-                  alt="Avatar"
-                  className="h-10 w-10 rounded-full cursor-pointer"
-                  onClick={() => setMenuOpen(!menuOpen)}
-                />
-                {menuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg">
-                    <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</Link>
-                    <Link to="/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</Link>
-                    <button onClick={() => {
-                      dispatch(logout());
-                      localStorage.removeItem('authToken');
-                    }} className="block w-full text-center px-4 py-2 text-sm text-red-600 font-bold bg-red-300 hover:bg-gray-100">Logout</button>
-                  </div>
-                )}
-              </div>
+                <AvatarDropdown />
             ) : (
               // Show Login and Register when not logged in
               <>

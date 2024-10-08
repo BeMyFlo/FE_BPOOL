@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './userSlice';
+import notificationReducer from './notificationSlice'; // Import notificationSlice
 import {
   persistStore,
   persistReducer,
@@ -19,11 +20,13 @@ const persistConfig = {
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, userReducer);
+// Lưu trữ trạng thái người dùng với persistReducer
+const persistedUserReducer = persistReducer(persistConfig, userReducer);
 
 const store = configureStore({
   reducer: {
-    user: persistedReducer,
+    user: persistedUserReducer, // persist cho user
+    notification: notificationReducer, // Thêm notification reducer mà không cần persist
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

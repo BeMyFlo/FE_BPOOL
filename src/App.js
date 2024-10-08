@@ -6,6 +6,7 @@ import './App.css';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import Routes from './routes/index'; // Import the routes
+import Notification from './components/Notification';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <div className="App">
         {/* Component */}
         <Navbar />
+        <Notification />
         {/* Route */}
         <div className='my-20'>
           <Routes />
