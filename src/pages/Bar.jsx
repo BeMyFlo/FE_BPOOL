@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CitySelectorPopup from '../components/CitySelectorPopup.js';
-import Filter from '../components/filter.js';
+import Filter from '../components/Filter.js';
 import ListBar from '../components/list-bar.js';
 import { CiFilter } from "react-icons/ci";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

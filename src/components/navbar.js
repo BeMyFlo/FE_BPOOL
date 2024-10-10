@@ -1,31 +1,26 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from '../assets/img/logo-2.jpg';
 import { MdOutlineMenu } from "react-icons/md";
-import { AuthContext } from '../context/AuthContext';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/userSlice';
 import AvatarDropdown from './AvatarDropdown';
 
 function Navbar() {
   const location = useLocation();
-  const [selectedMenu, setSelectedMenu] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-  const handleMenuClick = (name) => {
-    if (selectedMenu === name) {
-      setSelectedMenu(null);
-    }
-  };
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // Lấy token và trạng thái từ Redux store
+  // Lấy trạng thái từ Redux
   const { isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  // Toggle cho menu di động
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
     <div className="bg-white shadow-md fixed w-full top-0 z-10">
@@ -33,46 +28,41 @@ function Navbar() {
         <div className="p-4 flex justify-between items-center h-full">
           <div>
             <a href="/">
-              <img className="h-7 md:h-[5rem]" src={Logo} alt="Mô tả hình ảnh" />
+              <img className="h-16 md:h-[5rem]" src={Logo} alt="Logo" />
             </a>
           </div>
+
+          {/* Menu chính cho Web */}
           <div className="hidden md:flex h-full items-center gap-16">
-            <Link to="/" className="hover:text-primaryColor font-semibold font-custom hover:-translate-y-1 hover:scale-110">
-              <div className={`${location.search === '?type=1' ? 'underline font-bold hover:text-gray-800' : 'font-bold hover:text-gray-800'}`} onClick={(e) => handleMenuClick('TRANG CHỦ')}>
+            <Link to="/" className="hover:text-primaryColor font-semibold hover:-translate-y-1 hover:scale-110">
+              <div className={`${location.pathname === '/' ? 'underline font-bold' : 'font-bold'} hover:text-gray-800`}>
                 TRANG CHỦ
               </div>
             </Link>
-            {/* Dropdown for ĐẶT BÀN */}
+            {/* Dropdown cho Đặt Bàn */}
             <div className="relative">
-              {/* Button to toggle menu with arrow */}
-              <div onClick={toggleMenu} className="cursor-pointer font-bold hover:text-gray-800 flex items-center px-4 py-2 rounded-md">
+              <div onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="cursor-pointer font-bold hover:text-gray-800 flex items-center px-4 py-2 rounded-md">
                 ĐẶT BÀN
-                <FontAwesomeIcon icon={faChevronDown} className={`ml-2 transition-transform duration-300 ${isMenuOpen ? 'rotate-180' : ''}`} />
+                <FontAwesomeIcon icon={faChevronDown} className={`ml-2 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </div>
-
-              {/* Dropdown Menu */}
-              {isMenuOpen && (
+              {isDropdownOpen && (
                 <div className="absolute left-0 mt-1 bg-white shadow-lg rounded-lg z-50 w-40 border border-gray-200">
                   <Link to="/bar/?type=1" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                    <div className={`${location.search === '?type=1' ? 'underline font-bold' : 'font-bold'}`}>
-                      BIDA LỖ
-                    </div>
+                    Bida Lỗ
                   </Link>
                   <Link to="/bar/?type=2" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                    <div className={`${location.search === '?type=2' ? 'underline font-bold' : 'font-bold'}`}>
-                      BIDA 3 BĂNG
-                    </div>
+                    Bida 3 Băng
                   </Link>
                 </div>
               )}
             </div>
           </div>
-          {/* Check if the user is logged in */}
+
+          {/* Kiểm tra trạng thái đăng nhập */}
           <div className="hidden md:flex items-center gap-5">
             {isAuthenticated ? (
-                <AvatarDropdown />
+              <AvatarDropdown />
             ) : (
-              // Show Login and Register when not logged in
               <>
                 <Link to="/login" className="hover:underline font-normal">
                   <div className="h-10 w-20 bg-gray flex justify-center items-center rounded-xl shadow-md bg-gradient-to-r from-black to-gray-700">
@@ -80,36 +70,91 @@ function Navbar() {
                   </div>
                 </Link>
                 <Link to="/register" className="hover:underline font-normal">
-                  <div>Register</div>
+                  Register
                 </Link>
               </>
             )}
           </div>
-          <div className="md:hidden rounded-full shadow-2xl bg-slate-50">
-            <button onClick={() => setMenuOpen(!menuOpen)}>
-              <MdOutlineMenu className="w-10 h-10 p-2"/>
+
+          {/* Menu Mobile */}
+          <div className="md:hidden">
+            <button onClick={toggleMobileMenu} className="text-2xl p-2">
+              <MdOutlineMenu />
             </button>
           </div>
         </div>
-        {menuOpen && (
-          <div className="fixed bottom-0 w-full h-96">
-            <div className="bg-red-300 flex flex-col justify-evenly md:hidden space-y-2 h-full w-full rounded-t-[30px]">
-              <Link to="/?type=1" className="hover:text-primaryColor font-semibold font-custom hover:-translate-y-1 hover:scale-110 p-3">
-                <div className={`${location.search === '?type=1' ? 'text-yellow-600 font-bold hover:text-yellow-700' : 'font-bold hover:text-yellow-700'}`}>BIDA LỖ</div>
-              </Link>
-              <Link to="/?type=2" className="hover:text-primaryColor font-semibold font-custom hover:-translate-y-1 hover:scale-110 p-3">
-                <div className={`${location.search === '?type=2' ? 'text-yellow-600 font-bold hover:text-yellow-700' : 'font-bold hover:text-yellow-700'}`}>BIDA 3 BĂNG</div>
-              </Link>
-                <Link to="/login" className="hover:underline font-normal p-3">
-                  <div>Login</div>
-                </Link>
-              <Link to="/register" className="hover:underline font-normal p-3">
-                <div>Register</div>
-              </Link>
+      </div>
+
+      {/* Mobile Menu Dọc */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-20 bg-black bg-opacity-25 flex">
+          <div className="w-64 bg-white h-full shadow-md">
+            <div className="px-4 py-6">
+              <div>
+                <a href="/">
+                  <img className="h-16 md:h-[5rem]" src={Logo} alt="Logo" />
+                </a>
+              </div>
+              <ul className="mt-6 space-y-1">
+                <li>
+                  <Link 
+                    to="/" 
+                    className={`block rounded-lg px-4 py-2 text-sm font-medium ${location.pathname === '/' ? 'text-gray-700 bg-gray-100' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                  >
+                    TRANG CHỦ
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/bar/?type=1" 
+                    className={`block rounded-lg px-4 py-2 text-sm font-medium ${location.pathname === "/bar/" && location.search === "?type=1" ? 'text-gray-700 bg-gray-100' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                  >
+                    Bida Lỗ
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/bar/?type=2" 
+                    className={`block rounded-lg px-4 py-2 text-sm font-medium ${location.pathname === "/bar/" && location.search === "?type=1" ? 'text-gray-700 bg-gray-100' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                  >
+                    Bida 3 Băng
+                  </Link>
+                </li>
+                {isAuthenticated ? (
+                  <li>
+                    <button
+                      onClick={() => dispatch(logout())}
+                      className="block w-full rounded-lg px-4 py-2 text-sm font-medium text-red-700 hover:bg-gray-100 hover:text-gray-700"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                ) : (
+                  <>
+                    <li>
+                      <Link 
+                        to="/login" 
+                        className={`block rounded-lg px-4 py-2 text-sm font-medium ${location.pathname === '/login' ? 'text-gray-700 bg-gray-100' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                      >
+                        Login
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        to="/register" 
+                        className={`block rounded-lg px-4 py-2 text-sm font-medium ${location.pathname === '/register' ? 'text-gray-700 bg-gray-100' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                      >
+                        Register
+                      </Link>
+                    </li>
+                  </>
+                )}
+              </ul>
             </div>
           </div>
-        )}
-      </div>
+          <div className="flex-1" onClick={toggleMobileMenu} />
+        </div>
+      )}
     </div>
   );
 }
