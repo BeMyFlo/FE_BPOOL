@@ -115,7 +115,7 @@ function Navbar() {
                 <li>
                   <Link 
                     to="/bar/?type=2" 
-                    className={`block rounded-lg px-4 py-2 text-sm font-medium ${location.pathname === "/bar/" && location.search === "?type=1" ? 'text-gray-700 bg-gray-100' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
+                    className={`block rounded-lg px-4 py-2 text-sm font-medium ${location.pathname === "/bar/" && location.search === "?type=2" ? 'text-gray-700 bg-gray-100' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'}`}
                   >
                     Bida 3 Băng
                   </Link>
