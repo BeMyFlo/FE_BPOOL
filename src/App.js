@@ -3,10 +3,10 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import './App.css';
-// import Footer from './components/Footer';
 import Routes from './routes/index.js';
 import Notification from './components/Notification.js';
 import Navbar from './components/Navbar.js';
+import Footer from './components/Footer.js';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <div className='my-20'>
           <Routes />
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </BrowserRouter>
   );
