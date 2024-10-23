@@ -1,14 +1,16 @@
 import axios from "axios";
 
 export const publicClient = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://be-bpool.vercel.app/",
+  // baseURL: "http://localhost:8000/",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 export const privateClient = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://be-bpool.vercel.app/",
+  // baseURL: "http://localhost:8000/",
   headers: {
     "Content-Type": "application/json",
   },

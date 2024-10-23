@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Tạo một instance của axios với các cấu hình mặc định
 const axiosConfig = axios.create({
-  baseURL: 'http://localhost:8000/api/', // URL cơ sở cho tất cả các yêu cầu
+  baseURL: 'https://be-bpool.vercel.app/api/', // URL cơ sở cho tất cả các yêu cầu
   headers: {
     'Content-Type': 'application/json', // Header mặc định
   },
