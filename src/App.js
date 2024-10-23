@@ -6,7 +6,7 @@ import './App.css';
 import Routes from './routes/index.js';
 import Notification from './components/Notification.js';
 import Navbar from './components/navbar';
-import Footer from './components/Footer.js';
+import Footer from './components/footer';
 
 function App() {
   return (
