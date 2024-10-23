@@ -15,15 +15,10 @@ const userApi = {
   },
 
   // API đăng ký
-  signup: async ({ username, password, confirmPassword, displayName }) => {
+  signup: async (formData) => {
     try {
-      const response = await publicClient.post(userEndpoints.signup, {
-        username,
-        password,
-        confirmPassword,
-        displayName,
-      });
-      return response.data;
+      const response = await publicClient.post(userEndpoints.signup, formData);
+    return response.data;
     } catch (err) {
       throw new Error(err.response?.data?.message || "Signup failed");
     }

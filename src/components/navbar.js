@@ -12,6 +12,16 @@ function Navbar() {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [activeButton, setActiveButton] = useState('login');
+
+  const handleLoginClick = () => {
+    setActiveButton('login');
+  };
+
+  const handleRegisterClick = () => {
+    setActiveButton('register');
+  };
+
 
   // Lấy trạng thái từ Redux
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -65,12 +75,14 @@ function Navbar() {
             ) : (
               <>
                 <Link to="/login" className="hover:underline font-normal">
-                  <div className="h-10 w-20 bg-gray flex justify-center items-center rounded-xl shadow-md bg-gradient-to-r from-black to-gray-700">
-                    <div className="text-white">Login</div>
+                  <div className={`${activeButton === 'login' ? 'h-10 w-20 bg-gray flex justify-center items-center rounded-xl shadow-md bg-gradient-to-r from-black to-gray-700' : ''} `} onClick={handleLoginClick}>
+                    <div className={`${activeButton === 'login' ? 'text-white' : ''}`}>Login</div>
                   </div>
                 </Link>
                 <Link to="/register" className="hover:underline font-normal">
-                  Register
+                  <div className={`${activeButton === 'register' ? 'h-10 w-20 bg-gray flex justify-center items-center rounded-xl shadow-md bg-gradient-to-r from-black to-gray-700' : ''} `} onClick={handleRegisterClick}>
+                    <div className={`${activeButton === 'register' ? 'text-white' : ''}`}>Register</div>
+                  </div>
                 </Link>
               </>
             )}
