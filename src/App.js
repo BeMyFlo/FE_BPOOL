@@ -3,10 +3,10 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import './App.css';
-import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Routes from './routes/index'; // Import the routes
 import Notification from './components/Notification';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
