@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Slider from "../components/Slider";
 import { MdPayments } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';

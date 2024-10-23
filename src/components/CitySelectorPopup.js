@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from './../service/axiosConfig.js';
+import React from 'react';
 import { useFetchData } from '../hooks/useEffectData';
 
 function CitySelectorPopup({ onClose, onSelect }) {
