@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Slider from "../components/Slider";
+import Slider from "../components/slider";
 import { useParams, useNavigate } from 'react-router-dom'; // Thay đổi useHistory thành useNavigate
 import DateSelectorPopup from '../components/DateSelectorPopup';
 import HourSelectorPopup from '../components/HourSelectorPopup';
