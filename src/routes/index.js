@@ -2,12 +2,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Bar from '../pages/Bar';
-import Detail from '../pages/Detail';
+import Bar from '../pages/bar';
+import Detail from '../pages/detail';
 import Login from '../pages/login';
-import Register from '../pages/Register';
-import Payment from '../pages/Payment';
-import Home from '../pages/Home';
+import Register from '../pages/register';
+import Payment from '../pages/payment';
+import Home from '../pages/home';
 
 const AppRoutes = () => {
   return (
