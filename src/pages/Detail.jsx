@@ -76,7 +76,11 @@ function Detail() {
   };
 
   if (loading) {
-    return <Spinner />;
+    return (
+      <div className="mt-80">
+        <Spinner />
+      </div>
+    );
   }
 
   if (error) {
