@@ -52,9 +52,9 @@ function Login() {
 
   return (
     <div className="mt-44">
-      <div className="p-3 h-[500px] w-[480px] mx-auto bg-white rounded-3xl shadow-md">
+      <div className="p-3 md:h-[500px] md:w-[480px] md:mx-auto bg-white md:rounded-3xl md:shadow-md">
         <div className="flex justify-center mt-[-50px]">
-          <div className="h-32 w-[360px] flex justify-center items-center bg-gradient-to-r from-black to-gray-800 rounded-3xl shadow-md">
+        <div className="h-32 w-[200px] md:w-[360px] flex justify-center items-center bg-gradient-to-r from-black to-gray-800 rounded-3xl shadow-md">
             <h3 className="block antialiased tracking-normal font-sans text-3xl font-extrabold leading-snug text-white">Sign In</h3>
           </div>
         </div>
