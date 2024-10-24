@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Slider from "../components/Slider";
+import React, { useState } from 'react';
+import Slider from "../components/slider";
 import { MdPayments } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from './../service/axiosConfig.js';

@@ -3,7 +3,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import { useFetchData } from '../hooks/useEffectData';
 import { formatPrice } from '../utils/helper';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/spinner';
 
 const ITEMS_PER_PAGE = 9;
 
