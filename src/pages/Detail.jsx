@@ -5,6 +5,7 @@ import DateSelectorPopup from '../components/DateSelectorPopup';
 import HourSelectorPopup from '../components/HourSelectorPopup';
 import { format } from 'date-fns';
 import axios from './../service/axiosConfig.js';
+import Spinner from '../components/spinner';
 
 function Detail() {
   const { id } = useParams();
@@ -75,7 +76,7 @@ function Detail() {
   };
 
   if (loading) {
-    return <div>Đang tải...</div>;
+    return <Spinner />;
   }
 
   if (error) {
