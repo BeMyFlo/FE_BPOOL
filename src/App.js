@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import Routes from './routes/index.js';
 import Notification from './components/Notification.js';
-import Navbar from './components/navbar';
-import Footer from './components/footer';
+import Navbar from './components/Navbar.js';
+import Footer from './components/Footer';
 
 function App() {
   return (
