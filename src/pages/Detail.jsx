@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Slider from "../components/slider";
+import Slider from "../components/Slider";
 import { useParams, useNavigate } from 'react-router-dom'; // Thay đổi useHistory thành useNavigate
 import DateSelectorPopup from '../components/DateSelectorPopup';
 import HourSelectorPopup from '../components/HourSelectorPopup';
 import { format } from 'date-fns';
 import axios from './../service/axiosConfig.js';
-import Spinner from '../components/spinner';
+import Spinner from '../components/Spinner';
 
 function Detail() {
   const { id } = useParams();
